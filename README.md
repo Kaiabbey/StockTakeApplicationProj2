@@ -1,0 +1,1 @@
+# StockTakeApplicationProj2
