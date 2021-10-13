@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer');
+const globalUrl = "http://localhost/php/StocktakeApp";
 
 
 async function Loginmain(){
@@ -32,7 +33,7 @@ async function Logintest(email,password,code) {
       });
     });
 
-    const response = await page.goto("http://localhost/php/StocktakeApp/Stocktakeapi/api?action=login");
+    const response = await page.goto(globalUrl+"/Stocktakeapi/api?action=login");
 
     if(response.status() === code){
         console.log({   action: 'Login',
@@ -74,9 +75,9 @@ async function loginlogout(email, password) {
       });
     });
 
-    await page.goto("http://localhost/php/StocktakeApp/Stocktakeapi/api?action=login");
+    await page.goto(globalUrl+"login");
 
-    const response = await page.goto("http://localhost/php/StocktakeApp/Stocktakeapi/api?action=logout");
+    const response = await page.goto(globalUrl+"/Stocktakeapi/api?action=logout");
 
     if(response.status() === 201){
         console.log({   action: 'LoginLogout',
@@ -104,7 +105,7 @@ async function logout() {
 
     const page = await browser.newPage();
 
-    const response = await page.goto("http://localhost/php/StocktakeApp/Stocktakeapi/api?action=logout");
+    const response = await page.goto(globalUrl+"/Stocktakeapi/api?action=logout");
 
     if(response.status() === 400){
         console.log({   action: 'Logout',

@@ -1,7 +1,8 @@
 const puppeteer = require('puppeteer');
 
 const ValidEmail = "test@test.com";
-const ValidPassword = "Password123!"
+const ValidPassword = "Password123!";
+const globalUrl = "http://localhost/php/StocktakeApp/Stocktakeapi/api?action=";
 
 async function Maintesting(email, password){
     console.log("########## NEW UNIT TEST INITIALIZED ##########")
@@ -62,7 +63,7 @@ async function registerTest(email,password,firstname,lastname,code) {
       });
     });
 
-    const response = await page.goto("http://localhost/php/StocktakeApp/Stocktakeapi/api?action=register");
+    const response = await page.goto(globalUrl+"register");
 
     if(response.status() === code){
         console.log({   action: 'register',
@@ -105,9 +106,9 @@ async function registerTest(email,password,firstname,lastname,code) {
       });
     });
 
-    await page.goto("http://localhost/php/StocktakeApp/Stocktakeapi/api?action=login");
+    await page.goto(globalUrl+"login");
 
-    const response = await page.goto("http://localhost/php/StocktakeApp/Stocktakeapi/api?action=currentuser");
+    const response = await page.goto(globalUrl+"currentuser");
 
     //console.log( await response.status());
 
@@ -122,7 +123,7 @@ async function registerTest(email,password,firstname,lastname,code) {
 
     console.log(await id);
 
-    const url = "http://localhost/php/StocktakeApp/Stocktakeapi/api?action=deleteuser&user_id="+id;
+    const url = globalUrl+"deleteuser&user_id="+id;
 
     const delresponse = await page.goto(url);
 
@@ -165,11 +166,11 @@ async function registerTest(email,password,firstname,lastname,code) {
       });
     });
 
-    await page.goto("http://localhost/php/StocktakeApp/Stocktakeapi/api?action=login");
+    await page.goto(globalUrl+"login");
 
     if(key != null){
   
-      const url = "http://localhost/php/StocktakeApp/Stocktakeapi/api?action="+action+"&"+key+"="+Value;
+      const url = globalUrl+action+"&"+key+"="+Value;
   
       const response = await page.goto(url);
   
@@ -191,7 +192,7 @@ async function registerTest(email,password,firstname,lastname,code) {
       await browser.close();
     }
     else{
-      const url = "http://localhost/php/StocktakeApp/Stocktakeapi/api?action="+action
+      const url = globalUrl+action
   
       const response = await page.goto(url);
   
@@ -228,7 +229,7 @@ async function registerTest(email,password,firstname,lastname,code) {
     page.on("request", interceptedRequest => {
       const url = interceptedRequest.url();
 
-      if(url == "http://localhost/php/StocktakeApp/Stocktakeapi/api?action=login"){
+      if(url == globalUrl+"login"){
         interceptedRequest.continue({
           method: "POST",
           postData: "email="+email+"&password="+password,
@@ -251,9 +252,9 @@ async function registerTest(email,password,firstname,lastname,code) {
       
     });
 
-    await page.goto("http://localhost/php/StocktakeApp/Stocktakeapi/api?action=login");
+    await page.goto(globalUrl+"login");
 
-    const response1 = await page.goto("http://localhost/php/StocktakeApp/Stocktakeapi/api?action=currentuser");
+    const response1 = await page.goto(globalUrl+"currentuser");
 
     //console.log( await response.status());
 
@@ -267,7 +268,7 @@ async function registerTest(email,password,firstname,lastname,code) {
     }
 
 
-    const Eurl = "http://localhost/php/StocktakeApp/Stocktakeapi/api?action=edituser&user_id="+ id;
+    const Eurl = globalUrl+"edituser&user_id="+ id;
 
     const response = await page.goto(Eurl);
 
